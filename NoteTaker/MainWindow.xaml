@@ -1,0 +1,25 @@
+﻿<Window x:Class="NoteTaker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Note">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row ="0" Orientation="Horizontal">
+            <Button x:Name="toggleEraser" Content="Toggle _Eraser" Click="ToggleEraser" />
+            <Button x:Name="toggleHighlighter" Content="Toggle _Highlighter" Click="ToggleHighlighter"/>
+            <Button x:Name="saveInk" Content="_Save Ink" Click="SaveInk"/>
+            <Button x:Name="loadInk" Content="L_oad Ink" Click="LoadInk"/>
+            <Button x:Name="newWindow" Content="_New Window" Click="NewWindow"/>
+            <Button x:Name="clearInk" Content="_Clear Ink" Click="ClearInk"/>
+        </StackPanel>
+        <DockPanel Grid.Row ="1" x:Name="canvasSlot">
+
+        </DockPanel>
+    </Grid>
+</Window>
