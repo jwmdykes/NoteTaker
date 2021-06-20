@@ -29,20 +29,22 @@ namespace NoteTaker
         DrawingAttributes highlighterDA;
         bool useHighlighter = false;
         bool useEraser = false;
+        System.Windows.Media.SolidColorBrush backgroundColor;
 
         public MainWindow()
         {
             InitializeComponent();
 
             inkCanvas1 = new InkCanvas();
-            inkCanvas1.Background = Brushes.DarkSlateBlue;
-            inkCanvas1.DefaultDrawingAttributes.Color = Colors.SpringGreen;
+            backgroundColor = new System.Windows.Media.SolidColorBrush();
+            backgroundColor.Color = Color.FromArgb(0xff, 0xA0, 0xE7, 0xE5);
+            inkCanvas1.Background = backgroundColor;
 
             _ = canvasSlot.Children.Add(inkCanvas1);
 
             // Set up the DrawingAttributes for the pen.
             inkDA = new DrawingAttributes();
-            inkDA.Color = Colors.SpringGreen;
+            inkDA.Color = Colors.Black;
             inkDA.Height = 5;
             inkDA.Width = 5;
             inkDA.FitToCurve = false;
@@ -93,7 +95,7 @@ namespace NoteTaker
                 inkCanvas1.EditingMode = InkCanvasEditingMode.EraseByPoint;
                 inkCanvas1.EraserShape = new EllipseStylusShape(30, 30);
             }
-
+            
             useEraser = !useEraser;
         }
 

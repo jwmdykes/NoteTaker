@@ -17,6 +17,7 @@
             <Button x:Name="loadInk" Content="L_oad Ink" Click="LoadInk"/>
             <Button x:Name="newWindow" Content="_New Window" Click="NewWindow"/>
             <Button x:Name="clearInk" Content="_Clear Ink" Click="ClearInk"/>
+            
         </StackPanel>
         <DockPanel Grid.Row ="1" x:Name="canvasSlot">
 
