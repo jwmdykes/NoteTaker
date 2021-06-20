@@ -3,9 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:NoteTaker"
         mc:Ignorable="d"
         Title="Note">
-    <Grid>
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static local:FormatCommands.PenColorPopup}" Executed="PenColorPopup"/>
+    </Window.CommandBindings>
+    <Grid Name='maingrid'>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
@@ -17,10 +22,18 @@
             <Button x:Name="loadInk" Content="L_oad Ink" Click="LoadInk"/>
             <Button x:Name="newWindow" Content="_New Window" Click="NewWindow"/>
             <Button x:Name="clearInk" Content="_Clear Ink" Click="ClearInk"/>
-            
+            <xctk:ColorPicker Name="colorPicker" DisplayColorAndName="True" SelectedColorChanged="penColorChange" AvailableColorsSortingMode="HueSaturationBrightness"></xctk:ColorPicker>
         </StackPanel>
-        <DockPanel Grid.Row ="1" x:Name="canvasSlot">
+        <Grid Grid.Row ="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        </DockPanel>
+            <Grid Grid.Row="0" Grid.Column="0" x:Name="canvasSlot"></Grid>
+            <Canvas Grid.Row="0" Grid.Column="0" x:Name="colorPopupSlot"></Canvas>
+        </Grid>
     </Grid>
 </Window>

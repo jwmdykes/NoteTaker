@@ -40,7 +40,7 @@ namespace NoteTaker
             backgroundColor.Color = Color.FromArgb(0xff, 0xA0, 0xE7, 0xE5);
             inkCanvas1.Background = backgroundColor;
 
-            _ = canvasSlot.Children.Add(inkCanvas1);
+            canvasSlot.Children.Add(inkCanvas1);
 
             // Set up the DrawingAttributes for the pen.
             inkDA = new DrawingAttributes();
@@ -82,6 +82,9 @@ namespace NoteTaker
 
             // Add handler for window closing
             Closing += OnWindowClosing;
+
+            // command shortcuts
+            FormatCommands.PenColorPopup.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
         }
 
         private void ToggleEraser(object sender, RoutedEventArgs e)
@@ -189,6 +192,45 @@ namespace NoteTaker
             FileStream fs = new FileStream(targetPath, FileMode.Create);
             inkCanvas1.Strokes.Save(fs);
             fs.Close();
+        }
+
+        private void penColorChange(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        {
+            Xceed.Wpf.Toolkit.ColorPicker cp = e.Source as Xceed.Wpf.Toolkit.ColorPicker;
+            if (cp.SelectedColor.HasValue)
+            {
+                Color C = cp.SelectedColor.Value;
+                inkDA.Color = C;
+                inkCanvas1.DefaultDrawingAttributes = inkDA;
+            }
+
+            colorPopupSlot.Children.Clear();
+
+        }
+
+        private void colorPickerOnClose(object sender, RoutedEventArgs e)
+        {
+            colorPopupSlot.Children.Clear();
+        }
+
+
+        private void PenColorPopup(object sender, ExecutedRoutedEventArgs e)
+        {
+            Xceed.Wpf.Toolkit.ColorPicker cp = new Xceed.Wpf.Toolkit.ColorPicker();
+            cp.Name = "colorPickerAtCursor";
+            cp.AvailableColorsSortingMode = Xceed.Wpf.Toolkit.ColorSortingMode.HueSaturationBrightness;
+            cp.SelectedColorChanged += penColorChange;
+            cp.DisplayColorAndName = true;
+            cp.IsOpen = true;
+            cp.ShowDropDownButton = false;
+            cp.Closed += colorPickerOnClose;
+
+            Point pt = Mouse.GetPosition(canvasSlot);
+            Canvas.SetLeft(cp, pt.X);
+            Canvas.SetTop(cp, pt.Y);
+            colorPopupSlot.Children.Add(cp);
+            
+            
         }
     }
 }
